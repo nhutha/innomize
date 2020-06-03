@@ -3,6 +3,8 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
+import {connect} from "react-redux";
+import * as Actions from "../../actions"
 class TableItem extends Component{
   state = {
     checked : false
@@ -11,6 +13,7 @@ class TableItem extends Component{
     const target = event.target;
     const name = target.name;
     const value = target.type === 'checkbox' ?  target.checked : target.value ;
+
     this.setState({
       [name] : value
     })
@@ -44,4 +47,17 @@ class TableItem extends Component{
   }
 }
 
-export default TableItem;
+const mapStateToProps = state=>{
+  return {
+
+  }
+}
+
+const mapDispatchToProps = dispatch=>{
+  return {
+    onSelected : ()=>{
+      dispatch(Actions.selected);
+    }
+  }
+}
+export default connect(mapStateToProps,mapDispatchToProps)(TableItem);

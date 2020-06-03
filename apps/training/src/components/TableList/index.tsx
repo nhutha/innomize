@@ -34,8 +34,14 @@ class TableList extends Component {
 
   renderBody = ()=>{
     let element = null;
-    const {dataPost} = this.props;
-    element = dataPost.map((post,index)=>{
+    const {dataPost,completed} = this.props;
+    let dataRender = dataPost;
+    if(completed){
+      dataRender= dataPost.filter(post=>{
+        return post.com
+      })
+    }
+    element = dataRender.map((post,index)=>{
       return  <TableItem key = {index} post={post}></TableItem>
     })
 
@@ -79,7 +85,10 @@ class TableList extends Component {
 
 const mapStateToProps = state=>{
   return{
-    dataPost : state.listPost
+    dataPost : state.listPost,
+    myPost : state.filter.myPost,
+    completed : state.filter.completed,
+    status : state.filter.status
   }
 }
 

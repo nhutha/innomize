@@ -9,40 +9,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import TableItem from "../TableItem";
+import {connect} from "react-redux";
+import * as Actions from "../../actions";
 class TableList extends Component {
 
 
   state = {
     checked : false,
-    dataPost : [
-      {
-        id : 1,
-        title : 'post 1',
-        published : '3/6/2020',
-        com : true,
-        views : 200,
-        status : false,
-        author : 'author 1'
-      },
-      {
-        id : 2,
-        title : 'post 2',
-        published : '2/6/2020',
-        com : true,
-        views : 300,
-        status : false,
-        author : 'author 2'
-      },
-      {
-        id : 3,
-        title : 'post 3',
-        published : '3/3/2020',
-        com : false,
-        views : 100,
-        status : false,
-        author : 'author 3'
-      }
-    ]
+    dataPost : []
+  }
+
+  componentDidMount(){
+    this.props.getDataAPI();
   }
 
   onChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
@@ -56,7 +34,7 @@ class TableList extends Component {
 
   renderBody = ()=>{
     let element = null;
-    const {dataPost} = this.state;
+    const {dataPost} = this.props;
     element = dataPost.map((post,index)=>{
       return  <TableItem key = {index} post={post}></TableItem>
     })
@@ -99,4 +77,18 @@ class TableList extends Component {
   }
 }
 
-export default TableList;
+const mapStateToProps = state=>{
+  return{
+    dataPost : state.listPost
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    getDataAPI: ()=>{
+      dispatch(Actions.getDataAPI());
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(TableList);

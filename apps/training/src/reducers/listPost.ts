@@ -1,10 +1,10 @@
 import ActionType from "../constants/ActionType";
-const initialState =0;
+const initialState = [];
 
 const myReducers = (state = initialState,action)=>{
   switch(action.type){
-    case ActionType.SELECTED:{
-      state = state + +action.payload
+    case ActionType.GET_DATA:{
+      state = action.payload;
       return state;
     }
 

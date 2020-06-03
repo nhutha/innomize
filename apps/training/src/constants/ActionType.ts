@@ -1,5 +1,6 @@
 const actionType = {
-  SELECTED : "SELECTED"
+  SELECTED : "SELECTED",
+  GET_DATA : "GET_DATA"
 }
 
 export default actionType;

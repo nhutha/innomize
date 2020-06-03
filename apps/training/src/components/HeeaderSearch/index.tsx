@@ -2,15 +2,41 @@ import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import CreateIcon from '@material-ui/icons/Create';
 import ExportIcon from '@material-ui/icons/CloudDownload';
 import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Switch from '@material-ui/core/Switch';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import STATUS from "../../constants/Status";
 class HeaderSearch extends Component {
+  state = {
+    myPost : false,
+    completed : false,
+    status : 0
+  }
+  onChange = (e)=>{
+    const target =e.target;
+    const name = target.name;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+
+    this.setState({[name]:value})
+  }
+  renderItemSelect = ()=>{
+    let element = null;
+
+    element = STATUS.map((status,index)=>{
+      return  <MenuItem value={status.id}>{status.name}</MenuItem>
+    })
+
+    return element;
+  }
   render() {
+    const {myPost,completed , status}= this.state;
     return (
       <>
         <form noValidate autoComplete="off">
@@ -26,6 +52,43 @@ class HeaderSearch extends Component {
             }}
           />
         </form>
+        <Tooltip title="Filter list">
+          <div>
+              <Typography color="inherit" variant="subtitle1" component="span" style={{marginRight:15,marginLeft:15}}>
+                My Post:
+              </Typography>
+            <Switch
+              checked={myPost}
+              onChange={this.onChange}
+              color="primary"
+              name="myPost"
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+              <Typography color="inherit" variant="subtitle1" component="span" style={{marginRight:15,marginLeft:15}}>
+                Completed:
+              </Typography>
+            <Switch
+              checked={completed}
+              onChange={this.onChange}
+              color="primary"
+              name="completed"
+              inputProps={{ 'aria-label': 'primary checkbox' }}
+            />
+              <Typography color="inherit" variant="subtitle1" component="span" style={{marginRight:15,marginLeft:15}}>
+                Status:
+              </Typography>
+            <Select style={{width:100}}
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={status}
+              name ="status"
+              onChange={this.onChange}
+            >
+              {this.renderItemSelect()}
+
+            </Select>
+          </div>
+        </Tooltip>
         <Tooltip title="Filter list">
           <div>
             <IconButton color="primary" aria-label="filter list">

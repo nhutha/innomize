@@ -12,6 +12,8 @@ import Switch from '@material-ui/core/Switch';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import STATUS from "../../constants/Status";
+import {connect} from "react-redux";
+import * as Actions from "../../actions";
 class HeaderSearch extends Component {
   state = {
     myPost : false,
@@ -23,6 +25,15 @@ class HeaderSearch extends Component {
     const name = target.name;
     const value = target.type === 'checkbox' ? target.checked : target.value;
 
+    if(target.name === 'myPost'){
+      this.props.changeMyPost();
+    }
+    if(target.name === 'completed'){
+      this.props.changeCompleted();
+    }
+    if(target.name === 'status'){
+      this.props.changeStatus();
+    }
 
     this.setState({[name]:value})
   }
@@ -36,7 +47,8 @@ class HeaderSearch extends Component {
     return element;
   }
   render() {
-    const {myPost,completed , status}= this.state;
+    const {myPost,completed , status}= this.props;
+    console.log("status",status)
     return (
       <>
         <form noValidate autoComplete="off">
@@ -110,4 +122,26 @@ class HeaderSearch extends Component {
   }
 }
 
-export default HeaderSearch;
+const mapStateToProps = state=>{
+  return{
+    myPost : state.filter.myPost,
+    completed : state.filter.completed,
+    status : state.filter.status
+  }
+}
+
+const mapDispatchToProps = dispatch=>{
+  return{
+    changeMyPost : ()=>{
+      dispatch(Actions.changeMyPost())
+    },
+    changeStatus : ()=>{
+      dispatch(Actions.changStatus())
+    },
+    changeCompleted : ()=>{
+      dispatch(Actions.changeComplete())
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(HeaderSearch);

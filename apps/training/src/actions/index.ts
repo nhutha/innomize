@@ -25,3 +25,22 @@ export const getDataAPI = ()=>{
     })
   }
 }
+
+
+export const changeMyPost = ()=>{
+  return {
+    type : ActionType.CHANGE_MY_POST
+  }
+}
+
+export const changeComplete = ()=>{
+  return {
+    type :ActionType.CHANGE_COMPLETED
+  }
+}
+
+export const changStatus = ()=>{
+  return {
+    type : ActionType.CHANGE_STATUS
+  }
+}

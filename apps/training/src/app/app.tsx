@@ -1,12 +1,20 @@
 import React from 'react';
-
 import './app.css';
-import Table from "../components/table";
-
+import TableList from "../components/TableList";
+import Header from "../components/Header";
+import Paper from '@material-ui/core/Paper';
 export const App = () => {
   return (
-    <Table/>
+    <Paper>
+      <Header/>
+      <TableList/>
+    </Paper>
+
   );
 };
 
 export default App;
+
+
+
+
